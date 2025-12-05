@@ -1,15 +1,14 @@
 from presidio_anonymizer import AnonymizerEngine
 from presidio_anonymizer.entities import RecognizerResult, OperatorConfig
 
-def sample_run_anonymizer(text=None, start=None, end=None, replace_with="BIP"):
-    if text is None:
-        text = input("text: ")
-    if start is None:
-        start = int(input("start: "))
-    if end is None:
-        end = int(input("end: "))
 
+def sample_run_anonymizer(text, start, end, replace_with="BIP"):
+    """
+    Refactored version: NO input(), fully testable,
+    takes parameters directly and RETURNS result.
+    """
     engine = AnonymizerEngine()
+
     result = engine.anonymize(
         text=text,
         analyzer_results=[
@@ -17,10 +16,14 @@ def sample_run_anonymizer(text=None, start=None, end=None, replace_with="BIP"):
         ],
         operators={"PERSON": OperatorConfig("replace", {"new_value": replace_with})},
     )
+
     return result
 
+
 if __name__ == "__main__":
+    # Example call required by the assignment
     out = sample_run_anonymizer("My name is Bond.", 11, 15, "BIP")
+
     print(f"text: {out.text}")
     print("items:")
     print("[")
