@@ -4,7 +4,6 @@ from presidio_anonymizer.entities import InvalidParamError, RecognizerResult
 
 
 @pytest.mark.parametrize(
-    # fmt: off
     "start, end",
     [
         (0, 10),
@@ -12,7 +11,6 @@ from presidio_anonymizer.entities import InvalidParamError, RecognizerResult
         (0, 8),
         (0, 10),
     ],
-    # fmt: on
 )
 def test_given_recognizer_results_then_one_contains_another(start, end):
     first = create_recognizer_result("entity", 0, 0, 10)
@@ -22,7 +20,6 @@ def test_given_recognizer_results_then_one_contains_another(start, end):
 
 
 @pytest.mark.parametrize(
-    # fmt: off
     "start, end",
     [
         (4, 10),
@@ -30,7 +27,6 @@ def test_given_recognizer_results_then_one_contains_another(start, end):
         (0, 5),
         (0, 6),
     ],
-    # fmt: on
 )
 def test_given_recognizer_result_then_they_do_not_contain_one_another(start, end):
     first = create_recognizer_result("entity", 0, 5, 10)
@@ -47,7 +43,6 @@ def test_given_recognizer_results_with_same_indices_then_indices_are_equal():
 
 
 @pytest.mark.parametrize(
-    # fmt: off
     "start, end",
     [
         (4, 10),
@@ -55,7 +50,6 @@ def test_given_recognizer_results_with_same_indices_then_indices_are_equal():
         (0, 5),
         (0, 6),
     ],
-    # fmt: on
 )
 def test_given_recognizer_results_with_different_indices_then_indices_are_not_equal(
     start, end
@@ -67,7 +61,6 @@ def test_given_recognizer_results_with_different_indices_then_indices_are_not_eq
 
 
 @pytest.mark.parametrize(
-    # fmt: off
     "start, end, err",
     [
         ("0", 10,
@@ -75,7 +68,6 @@ def test_given_recognizer_results_with_different_indices_then_indices_are_not_eq
         (0, "10",
          "Invalid parameter value for end. Expecting 'number', but got 'string'."),
     ],
-    # fmt: on
 )
 def test_given_invalid_string_start_instead_of_int_then_we_fail(start, end, err):
     with pytest.raises(InvalidParamError, match=err):
@@ -90,7 +82,6 @@ def test_given_identical_recognizer_results_then_they_are_equal():
 
 
 @pytest.mark.parametrize(
-    # fmt: off
     "entity_type, score, start, end",
     [
         ("bla", 0.2, 4, 10),
@@ -98,7 +89,6 @@ def test_given_identical_recognizer_results_then_they_are_equal():
         ("bla", 0.2, 0, 11),
         ("bla", 0.3, 0, 10),
     ],
-    # fmt: on
 )
 def test_given_different_recognizer_result_then_they_are_not_equal(
     entity_type, score, start, end
@@ -117,7 +107,6 @@ def test_given_recognizer_result_then_their_hash_is_equal():
 
 
 @pytest.mark.parametrize(
-    # fmt: off
     "entity_type, score, start, end",
     [
         ("bla", 0.2, 4, 10),
@@ -125,7 +114,6 @@ def test_given_recognizer_result_then_their_hash_is_equal():
         ("bla", 0.2, 0, 11),
         ("bla", 0.3, 0, 10),
     ],
-    # fmt: on
 )
 def test_given_different_recognizer_results_then_hash_is_not_equal(
     entity_type, score, start, end
@@ -137,7 +125,6 @@ def test_given_different_recognizer_results_then_hash_is_not_equal(
 
 
 @pytest.mark.parametrize(
-    # fmt: off
     "entity_type, score, start, end",
     [
         ("bla", 0.2, 0, 10),
@@ -145,7 +132,6 @@ def test_given_different_recognizer_results_then_hash_is_not_equal(
         ("bla", 0.3, 0, 11),
         ("bla", 0.1, 0, 10),
     ],
-    # fmt: on
 )
 def test_given_recognizer_results_with_conflicting_indices_then_there_is_a_conflict(
     entity_type, score, start, end
@@ -157,14 +143,12 @@ def test_given_recognizer_results_with_conflicting_indices_then_there_is_a_confl
 
 
 @pytest.mark.parametrize(
-    # fmt: off
     "entity_type, score, start, end",
     [
         ("bla", 0.2, 3, 10),
         ("changed", 0.1, 2, 10),
         ("bla", 0.3, 0, 9),
     ],
-    # fmt: on
 )
 def test_given_recognizer_results_with_no_conflicting_indices_then_there_is_no_conflict(
     entity_type, score, start, end
@@ -176,32 +160,30 @@ def test_given_recognizer_results_with_no_conflicting_indices_then_there_is_no_c
 
 
 @pytest.mark.parametrize(
-    # fmt: off
     "request_json, result_text",
     [
-        ({}, "Invalid input, result must contain start",),
+        ({}, "Invalid input, result must contain start"),
         ({
              "end": 32,
              "score": 0.8,
              "entity_type": "NUMBER"
-         }, "Invalid input, result must contain start",),
+         }, "Invalid input, result must contain start"),
         ({
              "start": 28,
              "score": 0.8,
              "entity_type": "NUMBER"
-         }, "Invalid input, result must contain end",),
+         }, "Invalid input, result must contain end"),
         ({
              "start": 28,
              "end": 32,
              "entity_type": "NUMBER"
-         }, "Invalid input, analyzer result must contain score",),
+         }, "Invalid input, analyzer result must contain score"),
         ({
              "start": 28,
              "end": 32,
              "score": 0.8,
-         }, "Invalid input, result must contain entity_type",),
+         }, "Invalid input, result must contain entity_type"),
     ],
-    # fmt: on
 )
 def test_given_json_for_creating_recognizer_result_without_text_then_creation_fails(
     request_json, result_text
@@ -220,7 +202,6 @@ def test_given_valid_json_for_creating_recognizer_result_then_creation_is_succes
 
 
 @pytest.mark.parametrize(
-    # fmt: off
     "start, end",
     [
         (4, 10),
@@ -228,7 +209,6 @@ def test_given_valid_json_for_creating_recognizer_result_then_creation_is_succes
         (0, 2),
         (5, 9),
     ],
-    # fmt: on
 )
 def test_given_recognizer_results_then_one_is_greater_then_another(start, end):
     first = create_recognizer_result("entity", 0, 5, 10)
@@ -238,14 +218,12 @@ def test_given_recognizer_results_then_one_is_greater_then_another(start, end):
 
 
 @pytest.mark.parametrize(
-    # fmt: off
     "start, end",
     [
         (5, 10),
         (6, 12),
         (6, 7),
     ],
-    # fmt: on
 )
 def test_given_recognizer_result_then_one_is_not_greater_then_another(start, end):
     first = create_recognizer_result("entity", 0, 5, 10)
@@ -268,14 +246,12 @@ def test_given_endpoint_equal_to_start_point_then_we_succeed():
 
 
 @pytest.mark.parametrize(
-    # fmt: off
     "start, end",
     [
         (-1, 10),
         (6, -12),
         (-2, -2),
     ],
-    # fmt: on
 )
 def test_given_negative_start_or_endpoint_then_we_fail(start, end):
     with pytest.raises(
@@ -285,6 +261,43 @@ def test_given_negative_start_or_endpoint_then_we_fail(start, end):
         create_recognizer_result("entity", 0, start, end)
 
 
+# ------------------------------------------------------
+#  ★ YOUR intersects TEST — now placed correctly ★
+# ------------------------------------------------------
+@pytest.mark.parametrize(
+    "a_start,a_end,b_start,b_end,expected",
+    [
+        # No overlap
+        (0, 5, 6, 10, 0),
+        (6, 10, 0, 5, 0),
+
+        # Exact-touch boundaries (end == start)
+        (0, 5, 5, 10, 0),
+        (5, 10, 0, 5, 0),
+
+        # Partial overlaps
+        (0, 10, 8, 15, 2),
+        (5, 12, 0, 7, 2),
+
+        # Full overlap
+        (0, 10, 0, 10, 10),
+
+        # Complete containment
+        (0, 10, 2, 8, 6),
+        (2, 8, 0, 10, 6),
+    ]
+)
+def test_intersects(a_start, a_end, b_start, b_end, expected):
+    a = create_recognizer_result("E", 0.0, a_start, a_end)
+    b = create_recognizer_result("E", 0.0, b_start, b_end)
+
+    assert a.intersects(b) == expected
+    assert b.intersects(a) == expected
+
+
+# ------------------------------------------------------
+#  Helper function (must remain last)
+# ------------------------------------------------------
 def create_recognizer_result(entity_type: str, score: float, start: int, end: int):
     data = {"entity_type": entity_type, "score": score, "start": start, "end": end}
     return RecognizerResult.from_json(data)
